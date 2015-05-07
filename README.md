@@ -1,4 +1,4 @@
-# Code-Challenge-C
+# Code Challenge C
 
 Suppose you find the attached code from an overeager sales person who has tried their hand at creating a ‘feature’ they want implemented. There are two tasks you have:
  
