@@ -10,7 +10,7 @@ namespace RssReader
 {
     namespace Model
     {
-        class Stories
+        public class Stories
         {
             private string feedUri;
             public Stories(string feedIdentifier)

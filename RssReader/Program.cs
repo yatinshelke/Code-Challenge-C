@@ -41,6 +41,7 @@ namespace RssReader
     {
         public static void Main(string[] args)
         {
+            Stories feedStories = new Stories("BBC");
             // *** Argument passed to new RssReader is hard coded, perhaps default value should be defined in RssReader itself?
             // *** Besides, this argument is useless as the constructor uses another feed which is also hard coded.
             var reader = new RssReader("http://rss.cnn.com/rss/edition.rss");
