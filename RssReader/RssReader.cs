@@ -33,8 +33,6 @@ namespace RssReader
         /// <param name="feedAddress"></param>
         public RssReader(string feedAddress)
         {
-            reader = XmlReader.Create(feedAddress);
-            feedDocument = new XPathDocument(XmlReader.Create(feedAddress));
             _feed = XElement.Load(FEED_ADDRESSS).Element("channel");
             _storyLookup = new Dictionary<int, RssStory>();
             _storyIndex = new ThreadSafeQueue();
