@@ -11,11 +11,21 @@ namespace RssReader
     /// </summary>
     public class Searcher
     {
+        // *** This class may be eliminated if using XPath to search feed with criteria
+        // *** Besides, a lot more filter functionality can be implemented using XPath
+        // *** and also, that would be using existing and well tested libraries
+        // *** It is always a good idea to re-use what is out there instead of building
+        // *** everything from scratch
         public bool not = false;
         public String s = "";
 
         public Searcher(string[] args)
         {
+            // *** This logic must be simplified. 
+            // *** Further, the arguments to the program are directly dumped to this constructor
+            // *** Ideally arguments to the program should follow some convention e.g.
+            // *** RssReader BBC --contains "London"
+            // *** and this constructor should be Searcher(string uri, string searchString, boolean exclude)
             try
             {
                 s = args[1] ?? " ";

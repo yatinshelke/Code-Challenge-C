@@ -9,6 +9,8 @@ namespace RssReader
     /// </summary>
     public class ThreadSafeQueue
     {
+        // *** Really not sure what the purpose of this class is
+        // *** Why not use ConcurrentQueue<int> which is already available
         /*~ Mutex ~*/
         private object _lock;
 
