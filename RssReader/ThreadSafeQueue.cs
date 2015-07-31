@@ -3,6 +3,7 @@ using System.Linq;
 
 namespace RssReader
 {
+    // *** Why implement this when ConcurrentQueue<T> is available ?
     /// <summary>
     /// Need a queue that is threadsafe. This should be that collection.
     /// </summary>
@@ -26,7 +27,9 @@ namespace RssReader
         /// <param name="value">Float value to add</param>
         public void Enqueue(int value)
         {
+            // *** Why not using lock to add value?
             BACKING_LIST.Add(value);
+            // *** Why is _lock created here and not in constructor?
             _lock = new object();
         }
 
@@ -37,6 +40,7 @@ namespace RssReader
         /// <returns>Number.</returns>
         public int Pop()
         {
+            // *** why is this entire function code not locked?
             int value; // Store an int
 
             lock(_lock) { // Thread safety for the win
