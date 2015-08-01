@@ -1,6 +1,8 @@
 ﻿using System;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using RssReader.Model;
+using System.Collections.Generic;
+using System.Collections.Specialized;
 
 namespace UnitTestRssReaderModel
 {
@@ -70,8 +72,8 @@ namespace UnitTestRssReaderModel
         public void TestStoriesRead()
         {
             Stories stories = new Stories("ABC-MOST-READ", "//channel/item[contains(title, 'hat')][position()>last()-2]");
-            string text = stories.read();
-            Assert.IsNull(text);
+            List<StoryContent> storiesContent = stories.read();
+            Assert.IsNotNull(storiesContent);
         }
     }
 }

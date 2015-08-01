@@ -12,8 +12,25 @@ namespace RssReader
 {
     namespace Model
     {
+        public struct StoryContent
+        {
+            public StoryContent(string title, string description, string published, string link) : this()
+            {
+                Link = link;
+                Published = published;
+                Description = description;
+                Title = title;
+            }
+
+            public string Title { get; set; }
+            public string Description { get; set; }
+            public string Published { get; set; }
+            public string Link { get; set; }
+
+        }
         public class Stories
         {
+
             private string feedUri;
             private string xpath;
 
@@ -27,12 +44,25 @@ namespace RssReader
             {
 
             }
-            public string read()
+            public List<StoryContent> read()
             {
-                string result = null;
+                List<StoryContent> result = new List<StoryContent>();
                 XmlDocument doc = new XmlDocument();
                 doc.Load(feedUri);
                 XmlNodeList stories = doc.SelectNodes(xpath);
+                for (int i = 0; i < stories.Count; i++) {
+                    XmlDocument item = new XmlDocument();
+                    item.LoadXml(stories[i].OuterXml);
+                    XmlNode titleNode = item.SelectSingleNode("//item/title");
+                    string title = titleNode.InnerText;
+                    XmlNode descriptionNode = item.SelectSingleNode("//item/description");
+                    string description = descriptionNode.InnerText;
+                    XmlNode linkNode = item.SelectSingleNode("//item/link");
+                    string link = linkNode.InnerText;
+                    XmlNode publishedNode = item.SelectSingleNode("//item/pubDate");
+                    string published = publishedNode.InnerText;
+                    result.Add(new StoryContent(title, description, published, link));
+                }
                 return result;
             }
 
