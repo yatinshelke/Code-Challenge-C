@@ -7,6 +7,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NewsReader", "RssReader\New
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UnitTestRssReaderModel", "UnitTestRssReaderModel\UnitTestRssReaderModel.csproj", "{696A3CC6-9147-443B-816B-ED18AB729DD7}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UnitTestUserInput", "UnitTestUserInput\UnitTestUserInput.csproj", "{DDE65284-38E9-493D-BAE3-5A3D4F2DC3B8}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -21,6 +23,10 @@ Global
 		{696A3CC6-9147-443B-816B-ED18AB729DD7}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{696A3CC6-9147-443B-816B-ED18AB729DD7}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{696A3CC6-9147-443B-816B-ED18AB729DD7}.Release|Any CPU.Build.0 = Release|Any CPU
+		{DDE65284-38E9-493D-BAE3-5A3D4F2DC3B8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{DDE65284-38E9-493D-BAE3-5A3D4F2DC3B8}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{DDE65284-38E9-493D-BAE3-5A3D4F2DC3B8}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{DDE65284-38E9-493D-BAE3-5A3D4F2DC3B8}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

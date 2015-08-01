@@ -8,7 +8,7 @@ using System.Collections.Specialized;
 using System.Xml;
 using System.Xml.XPath;
 
-namespace NewsReader
+namespace NewsStories
 {
     namespace Model
     {

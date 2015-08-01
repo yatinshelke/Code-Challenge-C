@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 
-namespace NewsReader
+namespace NewsStories
 {
     // *** Why implement this when ConcurrentQueue<T> is available ?
     /// <summary>

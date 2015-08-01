@@ -1,6 +1,6 @@
 ﻿using System;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using NewsReader.Model;
+using NewsStories.Model;
 using System.Collections.Generic;
 using System.Collections.Specialized;
 
