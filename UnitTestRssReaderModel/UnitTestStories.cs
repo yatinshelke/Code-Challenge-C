@@ -74,6 +74,12 @@ namespace UnitTestRssReaderModel
             Stories stories = new Stories("ABC-MOST-READ", "//channel/item[contains(title, 'hat')][position()>last()-2]");
             List<StoryContent> storiesContent = stories.read();
             Assert.IsNotNull(storiesContent);
+            Assert.IsTrue(storiesContent.Count <= 2);
+            for (int i = 0; i < storiesContent.Count; i++)
+            {
+                string title = storiesContent[i].Title;
+                Assert.IsTrue(title.Contains("hat"));
+            }
         }
     }
 }
