@@ -26,15 +26,17 @@ namespace UnitTestUserInput
         private void checkValidArgs(string[] args)
         {
             bool caughtError = false;
+            UserInput input = null;
             try
             {
-                UserInput input = new UserInput(args);
+                input = new UserInput(args);
             }
             catch (Exception e)
             {
                 caughtError = true;
             }
             Assert.IsFalse(caughtError);
+            Assert.IsTrue(input.Options["feedIdentifier"] != null);
         }       
         private void checkValidOptions(NameValueCollection options)
         {

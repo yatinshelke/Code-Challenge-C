@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using System.Collections.Generic;
 using System.Collections.Specialized;
 
 namespace NewsArticles.Controller
@@ -21,12 +20,22 @@ namespace NewsArticles.Controller
             excludeArticleWithSearchString = true;
             maxStoriesCount = 5;
         }
-        public Printer(string feedNameOrUri, string searchString, bool excludeArticle, int maxCount) : this()
+        public Printer(View.UserInput input) : this()
         {
-            feedIdentifier = feedNameOrUri;
-            searchStringInArticle = searchString;
-            excludeArticleWithSearchString = excludeArticle;
-            maxStoriesCount = maxCount;
+            if (input.Options["feedIdentifier"] != null) {
+                feedIdentifier = input.Options["feedIdentifier"];
+            }
+            if (input.Options["/with"] != null) {
+                searchStringInArticle = input.Options["/with"];
+                excludeArticleWithSearchString = false;
+            } 
+            else if (input.Options["/without"] != null) {
+                searchStringInArticle = input.Options["/without"];
+                excludeArticleWithSearchString = true;
+            }
+            if (input.Options["/latest"] != null) {
+                maxStoriesCount = Int32.Parse(input.Options["/latest"]);
+            }
         }
 
         public void print()

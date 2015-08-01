@@ -123,6 +123,14 @@ namespace NewsArticles.View
                                 return false;
                             }
                         }
+                        if (Options["/latest"] != null)
+                        {
+                            int latestValue;
+                            if (!Int32.TryParse(Options["/latest"], out latestValue))
+                            {
+                                return false;
+                            }
+                        }
                     }
                 }
             }
