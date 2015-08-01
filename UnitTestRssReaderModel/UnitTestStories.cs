@@ -71,14 +71,16 @@ namespace UnitTestRssReaderModel
         [TestMethod]
         public void TestStoriesRead()
         {
-            Stories stories = new Stories("ABC-MOST-READ", "//channel/item[contains(title, 'hat')][position()>last()-2]");
+            int nStories = 5;
+            string searchTerm = "hat";
+            Stories stories = new Stories("ABC-MOST-READ", "//channel/item[contains(title, '" + searchTerm + "')][position()>last()-" + nStories + "]");
             List<StoryContent> storiesContent = stories.read();
-            Assert.IsNotNull(storiesContent);
-            Assert.IsTrue(storiesContent.Count <= 2);
+            Assert.IsNotNull(storiesContent, "Did not expect return value for Stories::read() to be null");
+            Assert.IsTrue(storiesContent.Count <= nStories, "Retrieved " + storiesContent.Count + " stories, but expected <= " + nStories);
             for (int i = 0; i < storiesContent.Count; i++)
             {
                 string title = storiesContent[i].Title;
-                Assert.IsTrue(title.Contains("hat"));
+                Assert.IsTrue(title.Contains("hat"), "Story title does not contain '" + searchTerm + "'");
             }
         }
     }
