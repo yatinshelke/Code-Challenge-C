@@ -46,6 +46,8 @@
     <Compile Include="Model\RssStories.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="View\ConsoleOutput.cs" />
+    <Compile Include="View\IDisplayItem.cs" />
     <Compile Include="View\UserInput.cs" />
   </ItemGroup>
   <ItemGroup>

@@ -41,11 +41,19 @@ namespace NewsArticles
     {
         public static void Main(string[] args)
         {
-            // TODO: Implement Controller and View code
-            // Model already provides a list of stories as List<RssStoryContent>
-            // This data needs to be converted by the Controller code so
-            // that it can be displayed in the view (which is the console)
-            RssStories feedStories = new RssStories("BBC", "");
+            View.UserInput input = null;
+            try
+            {
+                input = new View.UserInput(args);
+            }
+            catch (Exception e)
+            {
+                Console.Out.WriteLine(e.Message);
+            }
+            Controller.Printer printer = new Controller.Printer(input);
+            printer.print();
+            Console.Out.WriteLine("Press any key to exit");
+            Console.ReadKey();
         }
     }
 
