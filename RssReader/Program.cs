@@ -5,7 +5,7 @@ using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Xml.Linq;
-using RssReader.Model;
+using NewsReader.Model;
 
 // *** Stating overall requirements
 // ***   1. print latest 5 articles based on conditions stated in arguments to program
@@ -35,7 +35,7 @@ using RssReader.Model;
 // ***        filter the feed to get desired output
 // *** 5. There is no clear boundaries between data, output and business logic (MVC). 
 // ***    Although functionality is simple, it would still be better to follow an MVC pattern here
-namespace RssReader
+namespace NewsReader
 {
     public class Program
     {

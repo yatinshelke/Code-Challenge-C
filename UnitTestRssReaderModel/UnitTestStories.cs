@@ -1,6 +1,6 @@
 ﻿using System;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using RssReader.Model;
+using NewsReader.Model;
 using System.Collections.Generic;
 using System.Collections.Specialized;
 
