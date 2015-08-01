@@ -41,95 +41,12 @@ namespace RssReader
     {
         public static void Main(string[] args)
         {
+            // TODO: Implement Controller and View code
+            // Model already provides a list of stories as List<StoryContent>
+            // This data needs to be converted by the Controller code so
+            // that it can be displayed in the view (which is the console)
             Stories feedStories = new Stories("BBC", "");
-            // *** Argument passed to new RssReader is hard coded, perhaps default value should be defined in RssReader itself?
-            // *** Besides, this argument is useless as the constructor uses another feed which is also hard coded.
-            var reader = new RssReader("http://rss.cnn.com/rss/edition.rss");
-            reader.LoadStories();
-            var stories = reader.GetTopStories();
-
-            Searcher searcher = new Searcher(args);
-
-            foreach (var story in stories.Where(r =>
-                {
-                    try
-                    {
-                        searcher.SearchItHard(r.Title);
-                        return true;
-                    }
-                    catch(Exception e)
-                    { return false; }
-                }))
-            {
-                story.ToString();
-            }
-
-            // *** No indication to the user what to do .. user will see some results and then just stare
-            // *** Then they will type some key and program will exit, which is pretty confusing.
-            // *** At least say 'Press any key to exit'
-            Console.ReadLine();
-            string s = "hello";
-            if (s.Contains(""))
-            {
-                Console.WriteLine("non-empty string contains empty string");
-            }
-            else
-            {
-                Console.WriteLine("non-empty string does not contain empty string");
-            }
-            Console.ReadLine();
         }
     }
 
-    public class RssStory
-    {
-        // *** public property name starting with _ does not look right
-        // *** follow a camel-case notation
-        public int _index { get; set; }
-        // *** no consistency of property definitions
-        // *** it seems there is _title and Title, both public and one is a getter-setter
-        // *** Have just one getter-setter for each property
-        public string _title;
-        public string Title { get; set; }
-
-        private string _description;
-        public string Description { get; set; }
-
-        public string _link;
-        public Uri Link { get; set; }
-
-        public DateTime Published { get; set; }
-
-        // *** Not used at all
-        Regex regex = new Regex("(?<scheme>[a-z]{3,5})://(?<host>[a-z0-9_-]+(.[a-z0-9_-]+)*)/(?<path>.*)");
-
-        public RssStory(string title, string description, string link)
-        {
-            Title = title;
-            Description = description;
-            _link = link;
-
-            // *** Delete experimental code, add when actually implementing.
-            //Match match = regex.Match(link);
-            //Link = new UriBuilder(match.Groups["scheme"].Value, match.Groups["host"].Value, -1, match.Groups["path"].Value).Uri;
-
-            // 10,000 should be sufficient to avoid collisions.
-            // *** This does not make sense, why is an index a random number?
-            _index = new Random().Next(10000);
-        }
-
-        // *** Better design would be have an interface with a method like print()
-        // *** and have this class implement that interface.
-        public override string ToString()
-        {
-            Console.WriteLine("Title: " + Title);
-            Console.WriteLine("Description: " + Description);
-            Console.WriteLine("Published On: " + Published);
-            Console.WriteLine("Link: " + _link);
-            Console.WriteLine();
-
-            // *** Why do we need a return value? It does not seem to be used by caller.
-            return string.Empty;
-        }
-    }
 }
