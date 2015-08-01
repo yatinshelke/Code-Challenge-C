@@ -14,7 +14,7 @@ namespace UnitTestRssReaderModel
 
             for (int i = 0; i < validTestFeedNames.Length; i++)
             {
-                Stories stories = new Stories(validTestFeedNames[i]);
+                Stories stories = new Stories(validTestFeedNames[i], "");
                 Assert.IsNotNull(stories);
             }
 
@@ -25,7 +25,7 @@ namespace UnitTestRssReaderModel
                 bool failedOnInvalidRSSIdentifier = false;
                 try
                 {
-                    Stories stories = new Stories(invalidTestFeedNames[i]);
+                    Stories stories = new Stories(invalidTestFeedNames[i], "");
                 }
                 catch (Exception e)
                 {
@@ -43,7 +43,7 @@ namespace UnitTestRssReaderModel
             };
             for (int i = 0; i < validUris.Length; i++)
             {
-                Stories stories = new Stories(validUris[i]);
+                Stories stories = new Stories(validUris[i], "");
                 Assert.IsNotNull(stories);
             }
             string[] invalidUris = new string[] {
@@ -57,7 +57,7 @@ namespace UnitTestRssReaderModel
                 bool failedOnInvalidRSSIdentifier = false;
                 try
                 {
-                    Stories stories = new Stories(invalidUris[i]);
+                    Stories stories = new Stories(invalidUris[i], "");
                 }
                 catch (Exception e)
                 {
@@ -65,6 +65,13 @@ namespace UnitTestRssReaderModel
                 }
                 Assert.IsTrue(failedOnInvalidRSSIdentifier);
             }
+        }
+        [TestMethod]
+        public void TestStoriesRead()
+        {
+            Stories stories = new Stories("ABC-MOST-READ", "//channel/item[contains(title, 'hat')][position()>last()-2]");
+            string text = stories.read();
+            Assert.IsNull(text);
         }
     }
 }
