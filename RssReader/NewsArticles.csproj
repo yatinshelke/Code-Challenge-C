@@ -44,8 +44,7 @@
   <ItemGroup>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Stories.cs" />
-    <Compile Include="ThreadSafeQueue.cs" />
+    <Compile Include="RssStories.cs" />
     <Compile Include="UserInput.cs" />
   </ItemGroup>
   <ItemGroup>

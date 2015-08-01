@@ -28,16 +28,20 @@ namespace NewsStories
             public string Link { get; set; }
 
         }
-        public class Stories
+        public class RssStories
         {
 
             private string feedUri;
             private string xpath;
+            private int defaultStoriesCount;
 
-            public Stories(string feedIdentifier, string conditions)
+            public RssStories(string feedIdentifier, string conditions)
             {
                 setFeedUri(feedIdentifier);
                 xpath = conditions;
+                if (!Int32.TryParse(ConfigurationManager.AppSettings.Get("defaultStoriesCount"), out defaultStoriesCount)) {
+                    defaultStoriesCount = 5;
+                }
             }
 
             public void init()
@@ -83,7 +87,7 @@ namespace NewsStories
                 }
                 else
                 {
-                    var knownFeeds = ConfigurationManager.GetSection("feeds") as NameValueCollection;
+                    var knownFeeds = ConfigurationManager.GetSection("feeds/rss") as NameValueCollection;
                     if (knownFeeds != null)
                     {
                         feedUri = knownFeeds.Get(feedIdentifier);

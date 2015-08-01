@@ -60,9 +60,9 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\RssReader\NewsReader.csproj">
+    <ProjectReference Include="..\RssReader\NewsArticles.csproj">
       <Project>{c9c23185-3e79-44f2-909b-be5f78d2dc0f}</Project>
-      <Name>NewsReader</Name>
+      <Name>NewsArticles</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>

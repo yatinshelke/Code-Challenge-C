@@ -16,7 +16,7 @@ namespace UnitTestRssReaderModel
 
             for (int i = 0; i < validTestFeedNames.Length; i++)
             {
-                Stories stories = new Stories(validTestFeedNames[i], "");
+                RssStories stories = new RssStories(validTestFeedNames[i], "");
                 Assert.IsNotNull(stories);
             }
 
@@ -27,7 +27,7 @@ namespace UnitTestRssReaderModel
                 bool failedOnInvalidRSSIdentifier = false;
                 try
                 {
-                    Stories stories = new Stories(invalidTestFeedNames[i], "");
+                    RssStories stories = new RssStories(invalidTestFeedNames[i], "");
                 }
                 catch (Exception e)
                 {
@@ -45,7 +45,7 @@ namespace UnitTestRssReaderModel
             };
             for (int i = 0; i < validUris.Length; i++)
             {
-                Stories stories = new Stories(validUris[i], "");
+                RssStories stories = new RssStories(validUris[i], "");
                 Assert.IsNotNull(stories);
             }
             string[] invalidUris = new string[] {
@@ -59,7 +59,7 @@ namespace UnitTestRssReaderModel
                 bool failedOnInvalidRSSIdentifier = false;
                 try
                 {
-                    Stories stories = new Stories(invalidUris[i], "");
+                    RssStories stories = new RssStories(invalidUris[i], "");
                 }
                 catch (Exception e)
                 {
@@ -73,9 +73,9 @@ namespace UnitTestRssReaderModel
         {
             int nStories = 5;
             string searchTerm = "hat";
-            Stories stories = new Stories("ABC-MOST-READ", "//channel/item[contains(title, '" + searchTerm + "')][position()>last()-" + nStories + "]");
+            RssStories stories = new RssStories("ABC-MOST-READ", "//channel/item[contains(title, '" + searchTerm + "')][position()>last()-" + nStories + "]");
             List<StoryContent> storiesContent = stories.read();
-            Assert.IsNotNull(storiesContent, "Did not expect return value for Stories::read() to be null");
+            Assert.IsNotNull(storiesContent, "Did not expect return value for RssStories::read() to be null");
             Assert.IsTrue(storiesContent.Count <= nStories, "Retrieved " + storiesContent.Count + " stories, but expected <= " + nStories);
             for (int i = 0; i < storiesContent.Count; i++)
             {

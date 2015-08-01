@@ -9,7 +9,7 @@ namespace UnitTestUserInput
     [TestClass]
     public class UnitTestArgsProcessing
     {
-        private string expectedUsage = "NewsStories [/with[out] \"string\"] [/latest count]";
+        private string expectedUsage = "NewsArticles [/with[out] \"string\"] [/latest count]";
         private string expectedHelp =
 @"
   /with     ""string""  display news articles containing ""string""

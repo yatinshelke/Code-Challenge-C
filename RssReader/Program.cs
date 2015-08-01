@@ -45,7 +45,7 @@ namespace NewsStories
             // Model already provides a list of stories as List<StoryContent>
             // This data needs to be converted by the Controller code so
             // that it can be displayed in the view (which is the console)
-            Stories feedStories = new Stories("BBC", "");
+            RssStories feedStories = new RssStories("BBC", "");
         }
     }
 

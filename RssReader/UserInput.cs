@@ -17,7 +17,7 @@ namespace NewsStories
             private string help;
             public UserInput(string[] args)
             {
-                usage = "NewsStories [/with[out] \"string\"] [/latest count]";
+                usage = "NewsArticles [/with[out] \"string\"] [/latest count]";
                 help =
 @"
   /with     ""string""  display news articles containing ""string""
