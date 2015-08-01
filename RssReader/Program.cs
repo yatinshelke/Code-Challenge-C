@@ -5,7 +5,7 @@ using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Xml.Linq;
-using NewsStories.Model;
+using NewsArticles.Model;
 
 // *** Stating overall requirements
 // ***   1. print latest 5 articles based on conditions stated in arguments to program
@@ -35,14 +35,14 @@ using NewsStories.Model;
 // ***        filter the feed to get desired output
 // *** 5. There is no clear boundaries between data, output and business logic (MVC). 
 // ***    Although functionality is simple, it would still be better to follow an MVC pattern here
-namespace NewsStories
+namespace NewsArticles
 {
     public class Program
     {
         public static void Main(string[] args)
         {
             // TODO: Implement Controller and View code
-            // Model already provides a list of stories as List<StoryContent>
+            // Model already provides a list of stories as List<RssStoryContent>
             // This data needs to be converted by the Controller code so
             // that it can be displayed in the view (which is the console)
             RssStories feedStories = new RssStories("BBC", "");

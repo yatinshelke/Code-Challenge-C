@@ -1,6 +1,6 @@
 ﻿using System;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using NewsStories.Model;
+using NewsArticles.Model;
 using System.Collections.Generic;
 using System.Collections.Specialized;
 
@@ -74,7 +74,7 @@ namespace UnitTestRssReaderModel
             int nStories = 5;
             string searchTerm = "hat";
             RssStories stories = new RssStories("ABC-MOST-READ", "//channel/item[contains(title, '" + searchTerm + "')][position()>last()-" + nStories + "]");
-            List<StoryContent> storiesContent = stories.read();
+            List<RssStoryContent> storiesContent = stories.read();
             Assert.IsNotNull(storiesContent, "Did not expect return value for RssStories::read() to be null");
             Assert.IsTrue(storiesContent.Count <= nStories, "Retrieved " + storiesContent.Count + " stories, but expected <= " + nStories);
             for (int i = 0; i < storiesContent.Count; i++)

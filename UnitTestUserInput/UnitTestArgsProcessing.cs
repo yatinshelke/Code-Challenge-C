@@ -1,6 +1,6 @@
 ﻿using System;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using NewsStories.View;
+using NewsArticles.View;
 using System.Collections.Generic;
 using System.Collections.Specialized;
 

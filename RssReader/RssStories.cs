@@ -8,13 +8,13 @@ using System.Collections.Specialized;
 using System.Xml;
 using System.Xml.XPath;
 
-namespace NewsStories
+namespace NewsArticles
 {
     namespace Model
     {
-        public struct StoryContent
+        public struct RssStoryContent
         {
-            public StoryContent(string title, string description, string published, string link) : this()
+            public RssStoryContent(string title, string description, string published, string link) : this()
             {
                 Link = link;
                 Published = published;
@@ -33,24 +33,20 @@ namespace NewsStories
 
             private string feedUri;
             private string xpath;
-            private int defaultStoriesCount;
 
             public RssStories(string feedIdentifier, string conditions)
             {
                 setFeedUri(feedIdentifier);
                 xpath = conditions;
-                if (!Int32.TryParse(ConfigurationManager.AppSettings.Get("defaultStoriesCount"), out defaultStoriesCount)) {
-                    defaultStoriesCount = 5;
-                }
             }
 
             public void init()
             {
 
             }
-            public List<StoryContent> read()
+            public List<RssStoryContent> read()
             {
-                List<StoryContent> result = new List<StoryContent>();
+                List<RssStoryContent> result = new List<RssStoryContent>();
                 XmlDocument doc = new XmlDocument();
                 doc.Load(feedUri);
                 XmlNodeList stories = doc.SelectNodes(xpath);
@@ -65,7 +61,7 @@ namespace NewsStories
                     string link = linkNode.InnerText;
                     XmlNode publishedNode = item.SelectSingleNode("//item/pubDate");
                     string published = publishedNode.InnerText;
-                    result.Add(new StoryContent(title, description, published, link));
+                    result.Add(new RssStoryContent(title, description, published, link));
                 }
                 return result;
             }

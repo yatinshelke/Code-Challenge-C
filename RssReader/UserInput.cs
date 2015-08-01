@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 using System.Collections;
 using System.Collections.Specialized;
 
-namespace NewsStories
+namespace NewsArticles
 {
     namespace View
     {
