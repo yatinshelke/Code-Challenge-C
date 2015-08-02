@@ -46,10 +46,10 @@ namespace NewsArticles.Controller
         public void print()
         {
             Model.RssStories stories = new Model.RssStories(feedIdentifier, createXpath());
-            List<Model.RssStoryContent> storiesContent = stories.read();
+            List<Model.IStoryContent> storiesContent = stories.read();
             List<View.DisplayStory> displayStories = new List<View.DisplayStory>();
             foreach (var storyContent in storiesContent) {
-                View.DisplayStory displayStory = new View.DisplayStory(storyContent.Title, storyContent.Description, storyContent.Published, storyContent.Link);
+                View.DisplayStory displayStory = Controller.DisplayStoryFactory.produce(storyContent);
                 displayStories.Add(displayStory);
             }
             View.ConsoleOutput consoleOutput = new View.ConsoleOutput(displayStories);

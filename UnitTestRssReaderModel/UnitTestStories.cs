@@ -74,12 +74,12 @@ namespace UnitTestRssReaderModel
             int nStories = 5;
             string searchTerm = "hat";
             RssStories stories = new RssStories("ABC-MOST-READ", "//channel/item[contains(title, '" + searchTerm + "')][position()>last()-" + nStories + "]");
-            List<RssStoryContent> storiesContent = stories.read();
+            List<IStoryContent> storiesContent = stories.read();
             Assert.IsNotNull(storiesContent, "Did not expect return value for RssStories::read() to be null");
             Assert.IsTrue(storiesContent.Count <= nStories, "Retrieved " + storiesContent.Count + " stories, but expected <= " + nStories);
             for (int i = 0; i < storiesContent.Count; i++)
             {
-                string title = storiesContent[i].Title;
+                string title = ((RssStoryContent)(storiesContent[i])).Title;
                 Assert.IsTrue(title.Contains("hat"), "Story title does not contain '" + searchTerm + "'");
             }
         }

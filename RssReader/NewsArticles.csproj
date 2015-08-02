@@ -42,7 +42,11 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Controller\DisplayStoryFactory.cs" />
     <Compile Include="Controller\Printer.cs" />
+    <Compile Include="Model\AtomStories.cs" />
+    <Compile Include="Model\IStories.cs" />
+    <Compile Include="Model\IStoryContent.cs" />
     <Compile Include="Model\RssStories.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

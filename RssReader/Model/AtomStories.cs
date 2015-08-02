@@ -10,30 +10,32 @@ using System.Xml.XPath;
 
 namespace NewsArticles.Model
 {
-    public struct RssStoryContent : IStoryContent
+    public struct AtomStoryContent
     {
-        public RssStoryContent(string title, string description, string published, string link)
+        public AtomStoryContent(string title, string latLong, string elevation, string updated, string link)
             : this()
         {
             Link = link;
-            Published = published;
-            Description = description;
+            Updated = updated;
+            Elevation = elevation;
+            LatLong = LatLong;
             Title = title;
         }
 
         public string Title { get; set; }
-        public string Description { get; set; }
-        public string Published { get; set; }
+        public string LatLong { get; set; }
+        public string Elevation { get; set; }
+        public string Updated { get; set; }
         public string Link { get; set; }
 
     }
-    public class RssStories : IStories
+    public class AtomStories
     {
 
         private string feedUri;
         private string xpath;
 
-        public RssStories(string feedIdentifier, string conditions)
+        public AtomStories(string feedIdentifier, string conditions)
         {
             setFeedUri(feedIdentifier);
             xpath = conditions;
@@ -43,9 +45,9 @@ namespace NewsArticles.Model
         {
 
         }
-        public List<IStoryContent> read()
+        public List<RssStoryContent> read()
         {
-            List<IStoryContent> result = new List<IStoryContent>();
+            List<RssStoryContent> result = new List<RssStoryContent>();
             XmlDocument doc = new XmlDocument();
             doc.Load(feedUri);
             XmlNodeList stories = doc.SelectNodes(xpath);
