@@ -53,14 +53,15 @@ namespace NewsArticles
             }
             try
             {
-
-            }
-            catch (Exception e)
-            {
                 Controller.Printer printer = new Controller.Printer(input);
                 printer.print();
                 Console.Out.WriteLine("Press any key to exit");
                 Console.ReadKey();
+            }
+            catch (Exception e)
+            {
+                Console.Error.WriteLine(e.Message);
+                System.Environment.Exit(1);
             }
         }
     }
