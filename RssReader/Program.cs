@@ -49,11 +49,19 @@ namespace NewsArticles
             catch (Exception e)
             {
                 Console.Out.WriteLine(e.Message);
+                System.Environment.Exit(1);
             }
-            Controller.Printer printer = new Controller.Printer(input);
-            printer.print();
-            Console.Out.WriteLine("Press any key to exit");
-            Console.ReadKey();
+            try
+            {
+
+            }
+            catch (Exception e)
+            {
+                Controller.Printer printer = new Controller.Printer(input);
+                printer.print();
+                Console.Out.WriteLine("Press any key to exit");
+                Console.ReadKey();
+            }
         }
     }
 
