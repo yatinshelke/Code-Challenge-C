@@ -9,7 +9,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UnitTestRssReaderModel", "U
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UnitTestUserInput", "UnitTestUserInput\UnitTestUserInput.csproj", "{DDE65284-38E9-493D-BAE3-5A3D4F2DC3B8}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FactoryTest", "FactoryTest\FactoryTest.csproj", "{CD91D07E-EBDC-4246-B9F2-60BD77A5C082}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UnitTestsFactory", "FactoryTest\UnitTestsFactory.csproj", "{CD91D07E-EBDC-4246-B9F2-60BD77A5C082}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UnitTestApp", "UnitTestApp\UnitTestApp.csproj", "{E898EEBA-28B5-4008-80B7-B139B0B3CD55}"
 EndProject

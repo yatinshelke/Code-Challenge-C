@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using System.Collections.Generic;
 using System.Collections.Specialized;
 
 namespace NewsArticles.Controller
@@ -12,17 +11,11 @@ namespace NewsArticles.Controller
     {
         public string feedIdentifier { private get; set; }
         public string feedType { private get; set; }
-        public string searchStringInArticle { private get; set; }
-        public bool excludeArticleWithSearchString { private get; set; }
-        public int maxStoriesCount { private get; set; }
         public Dictionary<string, object> conditions { private get; set; }
         public Printer()
         {
             feedIdentifier = "BBC";
             feedType = "RSS";
-            searchStringInArticle = null;
-            excludeArticleWithSearchString = true;
-            maxStoriesCount = 5;
             conditions = new Dictionary<string, object>();
             conditions["searchTerm"] = null;
             conditions["excludeSearchTerm"] = true;
@@ -43,19 +36,14 @@ namespace NewsArticles.Controller
                 feedIdentifier = input.Options["feedIdentifier"];
             }
             if (input.Options["/with"] != null) {
-                searchStringInArticle = input.Options["/with"];
-                excludeArticleWithSearchString = false;
                 conditions["searchTerm"] = input.Options["/with"];
                 conditions["excludeSearchTerm"] = false;
             } 
             else if (input.Options["/without"] != null) {
-                searchStringInArticle = input.Options["/without"];
-                excludeArticleWithSearchString = true;
                 conditions["searchTerm"] = input.Options["/with"];
                 conditions["excludeSearchTerm"] = true;
             }
             if (input.Options["/latest"] != null) {
-                maxStoriesCount = Int32.Parse(input.Options["/latest"]);
                 conditions["tailSize"] = input.Options["/latest"];
             }
         }
