@@ -1,8 +1,22 @@
-# Code Challenge C
+# News Article Reader
 
-Suppose you find this code, created by an overeager sales person who has tried their hand at creating a ‘feature’ they want implemented. There are two tasks you have:
- 
-1. Please review the code so that you can teach the sales agent how to improve their development skills. You can do inline comments in the existing code, or a separate write-up, whatever makes more sense or is easier for you.
-2. Fix the feature and send back.
+Solution compiled in Visual Studio 2013 Community Edition
 
-Submit your response to careers@igloosoftware.com
+Usage:
+
+NewsArticles [/with[out] searchTerm] [/latest count] [feedName]
+NewsArticles [/with[out] searchTerm] [/latest count] [/rss|/atom feedUri]
+  /with     "string"  display news articles containing "string"
+  /without  "string"  display news articles not containing "string"
+  /latest   N           display latest N articles if no search criteria specified
+                        display at most N latest articles satisfying search criteria
+  /rss      "string"  The URI of the RSS news feed (mutually exclusive with /atom)
+  /atom     "string"  The URI of the ATOM news feed (mutually exclusive with /rss)
+  feedName              Recognized Feed names (Defaults to BBC RSS feed):
+                            BBC                (RSS)   British Broadcasting Network
+                            CNN                (RSS)   Cable News Network
+                            ABC-INT            (RSS)   ABC International
+                            ABC-MOST-READ      (RSS)   ABC Most read stories
+                            USGS-ALL-QUAKES    (ATOM)  USGS All earthquakes in past hour
+
+
