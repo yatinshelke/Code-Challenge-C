@@ -11,15 +11,22 @@ namespace NewsArticles.Controller
     public class Printer
     {
         public string feedIdentifier { private get; set; }
+        public string feedType { private get; set; }
         public string searchStringInArticle { private get; set; }
         public bool excludeArticleWithSearchString { private get; set; }
         public int maxStoriesCount { private get; set; }
+        public Dictionary<string, object> conditions { private get; set; }
         public Printer()
         {
             feedIdentifier = "BBC";
+            feedType = "RSS";
             searchStringInArticle = null;
             excludeArticleWithSearchString = true;
             maxStoriesCount = 5;
+            conditions = new Dictionary<string, object>();
+            conditions["searchTerm"] = null;
+            conditions["excludeSearchTerm"] = true;
+            conditions["tailSize"] = 5;
         }
         public Printer(View.UserInput input) : this()
         {
@@ -27,49 +34,43 @@ namespace NewsArticles.Controller
             // For now expecting View to validate user input
             // TODO: Clear definition of protocol for each of M, V and C
             //       so it is clear what validation to do and where.
-            if (input.Options["feedIdentifier"] != null) {
+            if (input.Options["feedType"] != null)
+            {
+                feedType = input.Options["feedType"];
+            }
+            if (input.Options["feedIdentifier"] != null)
+            {
                 feedIdentifier = input.Options["feedIdentifier"];
             }
             if (input.Options["/with"] != null) {
                 searchStringInArticle = input.Options["/with"];
                 excludeArticleWithSearchString = false;
+                conditions["searchTerm"] = input.Options["/with"];
+                conditions["excludeSearchTerm"] = false;
             } 
             else if (input.Options["/without"] != null) {
                 searchStringInArticle = input.Options["/without"];
                 excludeArticleWithSearchString = true;
+                conditions["searchTerm"] = input.Options["/with"];
+                conditions["excludeSearchTerm"] = true;
             }
             if (input.Options["/latest"] != null) {
                 maxStoriesCount = Int32.Parse(input.Options["/latest"]);
+                conditions["tailSize"] = input.Options["/latest"];
             }
         }
 
         public void print()
         {
-            Model.RssStories stories = new Model.RssStories(feedIdentifier, createXpath());
+            Model.IStories stories = StoriesFactory.produce(feedType, feedIdentifier, conditions);
             List<Model.IStoryContent> storiesContent = stories.read();
-            List<View.DisplayStory> displayStories = new List<View.DisplayStory>();
+            List<View.IDisplayItem> displayStories = new List<View.IDisplayItem>();
             foreach (var storyContent in storiesContent) {
-                View.DisplayStory displayStory = Controller.DisplayStoryFactory.produce(storyContent);
+                View.IDisplayItem displayStory = Controller.DisplayStoryFactory.produce(storyContent);
                 displayStories.Add(displayStory);
             }
             View.ConsoleOutput consoleOutput = new View.ConsoleOutput(displayStories);
             consoleOutput.draw();
-        }
-
-        private string createXpath() 
-        {
-            string xpath = "//channel/item";
-            if (searchStringInArticle != null)
-            {
-                string searchComponent = "contains(title, '" + searchStringInArticle + "')";
-                if (excludeArticleWithSearchString) {
-                    searchComponent = "not(" + searchComponent + ")";
-                }
-                searchComponent = "[" + searchComponent + "]";
-                xpath += searchComponent;
-            }
-            xpath += "[position()>last()-" + maxStoriesCount + "]";
-            return xpath;
         }
     }
 }

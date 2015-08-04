@@ -44,14 +44,17 @@
   <ItemGroup>
     <Compile Include="Controller\DisplayStoryFactory.cs" />
     <Compile Include="Controller\Printer.cs" />
+    <Compile Include="Controller\StoriesFactory.cs" />
     <Compile Include="Model\AtomStories.cs" />
     <Compile Include="Model\IStories.cs" />
     <Compile Include="Model\IStoryContent.cs" />
     <Compile Include="Model\RssStories.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="View\AtomDisplayStory.cs" />
     <Compile Include="View\ConsoleOutput.cs" />
     <Compile Include="View\IDisplayItem.cs" />
+    <Compile Include="View\RssDisplayStory.cs" />
     <Compile Include="View\UserInput.cs" />
   </ItemGroup>
   <ItemGroup>

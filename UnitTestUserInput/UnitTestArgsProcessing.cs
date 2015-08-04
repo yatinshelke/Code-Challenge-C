@@ -9,19 +9,24 @@ namespace UnitTestUserInput
     [TestClass]
     public class UnitTestArgsProcessing
     {
-            private string expectedUsage = "NewsArticles [/with[out] \"string\"] [/latest count] [feedName|feedUri]";
+            private string expectedUsage = 
+@"NewsArticles [/with[out] searchTerm] [/latest count] [feedName]
+NewsArticles [/with[out] searchTerm] [/latest count] [/rss|/atom feedUri]";
+
             private string expectedHelp =
 @"
   /with     ""string""  display news articles containing ""string""
   /without  ""string""  display news articles not containing ""string""
   /latest   N           display latest N articles if no search criteria specified
                         display at most N latest articles satisfying search criteria
-  feedName              Recognized Feed names (Defaults to BBC):
-                            BBC                British Broadcasting Network
-                            CNN                Cable News Network
-                            ABC-INT            ABC International
-                            ABC-MOST-READ      ABC Most read stories
-  feedUri               The URI of the news feed
+  /rss      ""string""  The URI of the RSS news feed (mutually exclusive with /atom)
+  /atom     ""string""  The URI of the ATOM news feed (mutually exclusive with /rss)
+  feedName              Recognized Feed names (Defaults to BBC RSS feed):
+                            BBC                (RSS)   British Broadcasting Network
+                            CNN                (RSS)   Cable News Network
+                            ABC-INT            (RSS)   ABC International
+                            ABC-MOST-READ      (RSS)   ABC Most read stories
+                            USGS-ALL-QUAKES    (ATOM)  USGS All earthquakes in past hour
 ";
         private void checkValidArgs(string[] args)
         {
@@ -61,16 +66,18 @@ namespace UnitTestUserInput
             List<string[]> argsSet = new List<string[]>();
             string[] goodArgs1 = { "BBC" };
             argsSet.Add(goodArgs1);
-            string[] goodArgs2 = { "http://feeds.abcnews.com/abcnews/internationalheadlines" };
+            string[] goodArgs2 = { "/rss", "http://feeds.abcnews.com/abcnews/internationalheadlines" };
             argsSet.Add(goodArgs2);
             string[] goodArgs3 = { "/latest", "5", "CNN"};
             argsSet.Add(goodArgs3);
-            string[] goodArgs4 = { "/with", "hat", "http://feeds.abcnews.com/abcnews/mostreadstories" };
+            string[] goodArgs4 = { "/with", "hat", "/rss", "http://feeds.abcnews.com/abcnews/mostreadstories" };
             argsSet.Add(goodArgs4);
             string[] goodArgs5 = { "/with", "hat", "/latest", "5", "ABC-MOST-READ" };
             argsSet.Add(goodArgs5);
-            string[] goodArgs6 = { "/with", "hat", "/latest", "5", "http://feeds.bbci.co.uk/news/rss.xml" };
+            string[] goodArgs6 = { "/with", "hat", "/latest", "5", "/rss", "http://feeds.bbci.co.uk/news/rss.xml" };
             argsSet.Add(goodArgs6);
+            string[] goodArgs7 = { "USGS-ALL-QUAKES" };
+            argsSet.Add(goodArgs7);
 
             foreach (string[] args in argsSet)
             {
@@ -174,6 +181,12 @@ namespace UnitTestUserInput
             argsSet.Add(badArgs5);
             string[] badArgs6 = { "hello", "world"};
             argsSet.Add(badArgs6);
+            string[] badArgs7 = { "http://feeds.abcnews.com/abcnews/internationalheadlines" };
+            argsSet.Add(badArgs7);
+            string[] badArgs8 = { "/with", "hat", "http://feeds.abcnews.com/abcnews/mostreadstories" };
+            argsSet.Add(badArgs8);
+            string[] badArgs9 = { "/with", "hat", "/latest", "5", "http://feeds.bbci.co.uk/news/rss.xml" };
+            argsSet.Add(badArgs9);
 
             foreach (string[] args in argsSet)
             {

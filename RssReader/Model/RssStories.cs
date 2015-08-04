@@ -31,12 +31,36 @@ namespace NewsArticles.Model
     {
 
         private string feedUri;
-        private string xpath;
+        private string storyNode;
+        private string conditions;
 
-        public RssStories(string feedIdentifier, string conditions)
+        public RssStories(string feedIdentifier, Dictionary<string, object> pathConditions)
         {
             setFeedUri(feedIdentifier);
-            xpath = conditions;
+            storyNode = ConfigurationManager.AppSettings.Get("rssStoryNode");
+            conditions = "";
+            string searchCondition = "";
+            string tailCondition = "";
+            foreach (KeyValuePair<string, object> pair in pathConditions)
+            {
+                if (pair.Key.Equals("searchTerm"))
+                {
+                    if (pair.Value != null && !pair.Value.Equals(""))
+                    {
+                        searchCondition = "contains(title, '" + pair.Value + "')";
+                        if (pair.Key.Equals("excludeSearchTerm"))
+                        {
+                            searchCondition = "not(" + searchCondition + ")";
+                        }
+                        searchCondition = "[" + searchCondition + "]";
+                    }
+                }
+                else if (pair.Key.Equals("tailSize"))
+                {
+                    tailCondition = "[position()>last()-" + pair.Value + "]";
+                }
+            }
+            conditions = searchCondition + tailCondition;
         }
 
         public void init()
@@ -48,7 +72,7 @@ namespace NewsArticles.Model
             List<IStoryContent> result = new List<IStoryContent>();
             XmlDocument doc = new XmlDocument();
             doc.Load(feedUri);
-            XmlNodeList stories = doc.SelectNodes(xpath);
+            XmlNodeList stories = doc.SelectNodes(storyNode + conditions);
             for (int i = 0; i < stories.Count; i++)
             {
                 XmlDocument item = new XmlDocument();

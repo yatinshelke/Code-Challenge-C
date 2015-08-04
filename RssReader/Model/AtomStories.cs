@@ -10,60 +10,85 @@ using System.Xml.XPath;
 
 namespace NewsArticles.Model
 {
-    public struct AtomStoryContent
+    public struct AtomStoryContent : IStoryContent
     {
-        public AtomStoryContent(string title, string latLong, string elevation, string updated, string link)
+        public AtomStoryContent(string title, string summary, string updated, string link)
             : this()
         {
             Link = link;
             Updated = updated;
-            Elevation = elevation;
-            LatLong = LatLong;
+            Summary = summary;
             Title = title;
         }
 
         public string Title { get; set; }
-        public string LatLong { get; set; }
-        public string Elevation { get; set; }
-        public string Updated { get; set; }
+        public string Summary { get; set; }
+       public string Updated { get; set; }
         public string Link { get; set; }
 
     }
-    public class AtomStories
+    public class AtomStories : IStories
     {
 
         private string feedUri;
-        private string xpath;
+        private string nsPrefix;
+        private string storyNode;
+        private string conditions;
 
-        public AtomStories(string feedIdentifier, string conditions)
+        public AtomStories(string feedIdentifier, Dictionary<string, object> pathConditions)
         {
             setFeedUri(feedIdentifier);
-            xpath = conditions;
+            nsPrefix = ConfigurationManager.AppSettings.Get("atomNSPrefix");
+            storyNode = "//" + nsPrefix + ":" + ConfigurationManager.AppSettings.Get("atomStoryNodeName");
+            conditions = "";
+            string searchCondition = "";
+            string tailCondition = "";
+            foreach (KeyValuePair<string, object> pair in pathConditions)
+            {
+                if (pair.Key.Equals("searchTerm"))
+                {
+                    searchCondition = "contains(" + nsPrefix + ":" + "title, '" + pair.Value + "')";
+                    if (pair.Key.Equals("excludeSearchTerm"))
+                    {
+                        searchCondition = "not(" + searchCondition + ")";
+                    }
+                    searchCondition = "[" + searchCondition + "]";
+                }
+                else if (pair.Key.Equals("tailSize"))
+                {
+                    tailCondition = "[position()>last()-" + pair.Value + "]";
+                }
+            }
+            conditions = searchCondition + tailCondition;
         }
 
         public void init()
         {
 
         }
-        public List<RssStoryContent> read()
+        public List<IStoryContent> read()
         {
-            List<RssStoryContent> result = new List<RssStoryContent>();
-            XmlDocument doc = new XmlDocument();
-            doc.Load(feedUri);
-            XmlNodeList stories = doc.SelectNodes(xpath);
-            for (int i = 0; i < stories.Count; i++)
+            List<IStoryContent> result = new List<IStoryContent>();
+            XPathDocument xDoc = new XPathDocument(feedUri);
+            XPathNavigator xNav = xDoc.CreateNavigator();
+            XmlNamespaceManager ns = new XmlNamespaceManager(xNav.NameTable);
+            ns.AddNamespace(nsPrefix, "http://www.w3.org/2005/Atom");
+            XPathNodeIterator xIter = xNav.Select(storyNode + conditions, ns);
+            while (xIter.MoveNext())
             {
+                string x = xIter.Current.OuterXml;
                 XmlDocument item = new XmlDocument();
-                item.LoadXml(stories[i].OuterXml);
-                XmlNode titleNode = item.SelectSingleNode("//item/title");
+                item.LoadXml(x);
+                string nodePrefix = storyNode + "/" + nsPrefix + ":";
+                XmlNode titleNode = item.SelectSingleNode(nodePrefix + "title", ns);
                 string title = titleNode.InnerText;
-                XmlNode descriptionNode = item.SelectSingleNode("//item/description");
-                string description = descriptionNode.InnerText;
-                XmlNode linkNode = item.SelectSingleNode("//item/link");
+                XmlNode summaryNode = item.SelectSingleNode(nodePrefix + "summary", ns);
+                string summary = summaryNode.InnerText;
+                XmlNode linkNode = item.SelectSingleNode(nodePrefix + "link", ns);
                 string link = linkNode.InnerText;
-                XmlNode publishedNode = item.SelectSingleNode("//item/pubDate");
-                string published = publishedNode.InnerText;
-                result.Add(new RssStoryContent(title, description, published, link));
+                XmlNode updatedNode = item.SelectSingleNode(nodePrefix + "updated", ns);
+                string updated = updatedNode.InnerText;
+                result.Add(new AtomStoryContent(title, summary, updated, link));
             }
             return result;
         }
@@ -85,18 +110,18 @@ namespace NewsArticles.Model
             }
             else
             {
-                var knownFeeds = ConfigurationManager.GetSection("feeds/rss") as NameValueCollection;
+                var knownFeeds = ConfigurationManager.GetSection("feeds/atom") as NameValueCollection;
                 if (knownFeeds != null)
                 {
                     feedUri = knownFeeds.Get(feedIdentifier);
                     if (feedUri == null)
                     {
-                        throw new Exception("Invalid RSS feed identifier");
+                        throw new Exception("Invalid ATOM feed identifier");
                     }
                 }
                 else
                 {
-                    throw new Exception("App does not know the URI for the RSS feed for RSS feed identifier: " + feedIdentifier);
+                    throw new Exception("App does not know the URI for the ATOM feed for RSS feed identifier: " + feedIdentifier);
                 }
             }
         }

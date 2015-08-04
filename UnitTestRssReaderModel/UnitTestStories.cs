@@ -16,7 +16,8 @@ namespace UnitTestRssReaderModel
 
             for (int i = 0; i < validTestFeedNames.Length; i++)
             {
-                RssStories stories = new RssStories(validTestFeedNames[i], "");
+                Dictionary<string, object> conditions = new Dictionary<string, object>();
+                RssStories stories = new RssStories(validTestFeedNames[i], conditions);
                 Assert.IsNotNull(stories);
             }
 
@@ -27,7 +28,8 @@ namespace UnitTestRssReaderModel
                 bool failedOnInvalidRSSIdentifier = false;
                 try
                 {
-                    RssStories stories = new RssStories(invalidTestFeedNames[i], "");
+                    Dictionary<string, object> conditions = new Dictionary<string, object>();
+                    RssStories stories = new RssStories(invalidTestFeedNames[i], conditions);
                 }
                 catch (Exception e)
                 {
@@ -45,7 +47,8 @@ namespace UnitTestRssReaderModel
             };
             for (int i = 0; i < validUris.Length; i++)
             {
-                RssStories stories = new RssStories(validUris[i], "");
+                Dictionary<string, object> conditions = new Dictionary<string, object>();
+                RssStories stories = new RssStories(validUris[i], conditions);
                 Assert.IsNotNull(stories);
             }
             string[] invalidUris = new string[] {
@@ -59,7 +62,8 @@ namespace UnitTestRssReaderModel
                 bool failedOnInvalidRSSIdentifier = false;
                 try
                 {
-                    RssStories stories = new RssStories(invalidUris[i], "");
+                    Dictionary<string, object> conditions = new Dictionary<string, object>();
+                    RssStories stories = new RssStories(invalidUris[i], conditions);
                 }
                 catch (Exception e)
                 {
@@ -73,7 +77,10 @@ namespace UnitTestRssReaderModel
         {
             int nStories = 5;
             string searchTerm = "hat";
-            RssStories stories = new RssStories("ABC-MOST-READ", "//channel/item[contains(title, '" + searchTerm + "')][position()>last()-" + nStories + "]");
+            Dictionary<string, object> conditions = new Dictionary<string, object>();
+            conditions.Add("searchTerm", searchTerm);
+            conditions.Add("tailCount", nStories);
+            RssStories stories = new RssStories("ABC-MOST-READ", conditions);
             List<IStoryContent> storiesContent = stories.read();
             Assert.IsNotNull(storiesContent, "Did not expect return value for RssStories::read() to be null");
             Assert.IsTrue(storiesContent.Count <= nStories, "Retrieved " + storiesContent.Count + " stories, but expected <= " + nStories);
