@@ -31,3 +31,21 @@ Usage:
 
                              USGS-ALL-QUAKES    (ATOM)  USGS All earthquakes in past hour
 
+Design
+
+          MODEL                CONTROLLER                   VIEW
+
+          IStoryContent
+		      /\
+			  \/
+			  |
+		  IStories <>-------------Printer-----------------<>ConsoleOutput
+		                          |    |                          |
+								 /\   /\                         /\
+								 \/   \/                         \/
+               DisplayStoryFactory     StoriesFactory         RssDisplayStory
+			                                                  AtomDisplayStory
+															      |
+																 /\
+																 \/
+														      IDisplayItem
